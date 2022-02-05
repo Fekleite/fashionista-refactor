@@ -1,5 +1,12 @@
-function App() {
-  return ( <h1>Hello world</h1> );
-}
+import MyRoutes from "./routes";
 
-export default App;
+import GlobalStyles from './style';
+
+export default function App() {
+  return (
+    <>
+      <GlobalStyles />
+      <MyRoutes />
+    </>
+  );
+}
