@@ -1,29 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
 import { createContext, ReactNode, useEffect, useState } from 'react';
+
+import { encodeSlug } from '../hooks/useFriendlyURL';
+import { Product } from '../types/productType';
 
 interface ProductListContextType {
   products: Product[] | undefined;
   status: number;
-}
-
-interface Product {
-  name: string;
-  style: string;
-  code_color: string;
-  color_slug: string;
-  color: string;
-  on_sale: boolean;
-  regular_price: string;
-  actual_price: string;
-  discount_percentage: string;
-  installments: string;
-  image: string;
-  sizes: [
-    {
-      available: boolean;
-      size: string;
-      sku: string;
-    }
-  ]
 }
 
 interface ProductListContextProviderProps {
@@ -41,7 +24,19 @@ export function ProductListContextProvider({ children }: ProductListContextProvi
       try {
         const response = await fetch('https://5f184aca7c06c900160dcd19.mockapi.io/api/v1/catalog')
         const data = await response.json()
-        setProducts(data?.products)
+        
+        const formattedProducts = data?.products.map((product: Product) => {
+          const id = uuidv4()
+          const slug = encodeSlug(product.name);
+
+          return {
+            ...product,
+            id,
+            slug
+          }
+        })
+
+        setProducts(formattedProducts)
         setStatus(200)
   
       } catch (error) {
