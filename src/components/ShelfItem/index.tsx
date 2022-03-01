@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
 import ImageNotFound from '../../assets/image-not-found.jpg';
-import { Product } from '../../types/productType';
+import { ProductType } from '../../types/productType';
 
 import { Container, Stack, PriceContainer } from './style';
 
 interface ShelfItemProps {
-  product: Product;
+  product: ProductType;
 }
 
 export default function ShelfItem({ product }: ShelfItemProps) {

@@ -2,10 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
 import { encodeSlug } from '../hooks/useFriendlyURL';
-import { Product } from '../types/productType';
+import { ProductType } from '../types/productType';
 
 interface ProductListContextType {
-  products: Product[] | undefined;
+  products: ProductType[] | undefined;
   status: number;
 }
 
@@ -16,7 +16,7 @@ interface ProductListContextProviderProps {
 export const ProductListContext = createContext({} as ProductListContextType);
 
 export function ProductListContextProvider({ children }: ProductListContextProviderProps) {
-  const [products, setProducts] = useState<Product[] | undefined>()
+  const [products, setProducts] = useState<ProductType[] | undefined>()
   const [status, setStatus] = useState<number>(404)
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function ProductListContextProvider({ children }: ProductListContextProvi
         const response = await fetch('https://5f184aca7c06c900160dcd19.mockapi.io/api/v1/catalog')
         const data = await response.json()
         
-        const formattedProducts = data?.products.map((product: Product) => {
+        const formattedProducts = data?.products.map((product: ProductType) => {
           const id = uuidv4()
           const slug = encodeSlug(product.name);
 
