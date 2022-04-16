@@ -1,21 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
 import { useProducts } from "../../hooks/useProducts";
+import { useMiniCartProducts } from "../../hooks/useMiniCartProduct";
 import { ProductType } from "../../types/productType";
 
 import ImageNotFound from '../../assets/image-not-found.jpg';
 
-import { Container, Breadcrumb, Content, Sizes, PriceContainer } from "./style";
+import { Container, Breadcrumb, Content, Sizes, PriceContainer,Grid } from "./style";
 
 export default function Product() {
   const { products } = useProducts();
-  const [product, setProduct] = useState<ProductType | null>(null);
-
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { addProduct } = useMiniCartProducts();
+  const [product, setProduct] = useState<ProductType>();
+  const [selectedSku, setSelectedSku] = useState("");
 
   const { slug } = useParams();
 
@@ -27,11 +28,21 @@ export default function Product() {
     }
   }, [products, slug])
 
+  function handleAddProduct() {
+    const newProduct = {
+      ...product,
+      amount: 1,
+      selectedSku
+    }
+
+    addProduct(newProduct)
+  }
+
   return (
     <Container>
       <Header />
 
-      <div>
+      <Grid>
         <Breadcrumb>
           <Link to="/">Home</Link>
           {">"}
@@ -53,14 +64,14 @@ export default function Product() {
             <Sizes>
               <span>Escolha um tamanho:</span>
               <ul>
-                {product?.sizes.map(size => (
+                {product?.sizes?.map(size => (
                   <li key={size.sku}>
                     <input 
                       type="radio" 
                       name="productSize"
                       id={size.size} 
                       disabled={size.available}
-                      ref={inputRef}
+                      onClick={() => setSelectedSku(size.sku || "")}
                     />
                     <label htmlFor={size.size}>
                       {size.size}
@@ -81,12 +92,12 @@ export default function Product() {
               )}
             </PriceContainer>
 
-            <button>
+            <button onClick={handleAddProduct}>
               Adicionar a sacola
             </button>
           </div>
         </Content>
-      </div>
+      </Grid>
 
       <Footer />
     </Container>

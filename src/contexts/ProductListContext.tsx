@@ -27,7 +27,7 @@ export function ProductListContextProvider({ children }: ProductListContextProvi
         
         const formattedProducts = data?.products.map((product: ProductType) => {
           const id = uuidv4()
-          const slug = encodeSlug(product.name);
+          const slug = encodeSlug(product.name || "");
 
           return {
             ...product,

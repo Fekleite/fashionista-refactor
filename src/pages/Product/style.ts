@@ -3,14 +3,14 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   margin-top: 80px;
+`;
 
-  > div {
-    width: 100%;
-    max-width: 1280px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
+export const Grid = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
 `;
 
 export const Breadcrumb = styled.div`
