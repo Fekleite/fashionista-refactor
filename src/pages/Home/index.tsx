@@ -4,7 +4,7 @@ import ShelfItem from "../../components/ShelfItem";
 
 import { useProducts } from "../../hooks/useProducts";
 
-import { Container } from "./style";
+import { Container, Gallery } from "./style";
 
 export default function Home() {
   const { products } = useProducts();
@@ -13,13 +13,13 @@ export default function Home() {
     <Container>
       <Header />
 
-      <div>
+      <Gallery>
         <ul>
           {products?.map(product => (
             <ShelfItem product={product} key={product.id}/>
           ))}
         </ul>
-      </div>
+      </Gallery>
 
       <Footer />
     </Container>
