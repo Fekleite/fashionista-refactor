@@ -1,3 +1,3 @@
 # Fashionista
 
-Refafatoração do projeto fashionista.
+Refafatoração do projeto fashionista, em andamento.
